@@ -77,9 +77,9 @@ class Calendario(ttk.Frame):
                 Evento.eliminar(id_evento) # actualizo mi .json
                 self.tree.delete(item_id) # actualizo treeview
 
-    def actualizar_lista(self, receta):
+    def actualizar_lista(self, evento):
         # add data to the treeview
-        self.tree.insert('', tk.END, values=receta)
+        self.tree.insert('', tk.END, values=evento)
 
 class Alta(ttk.Frame):
     def __init__(self, parent, marco):
@@ -93,128 +93,145 @@ class Alta(ttk.Frame):
         parent.rowconfigure(0, weight=1)
         parent.resizable(False, False)
 
-        self.nombre_receta = tk.StringVar()
-        self.tiempo_preparacion = tk.StringVar()
-        self.tiempo_coccion = tk.StringVar()
-        self.fecha_creacion = tk.StringVar()
+        self.nombre = tk.StringVar()
+        self.fecha = tk.StringVar()
+        self.hora = tk.StringVar()
+        self.descripcion = tk.StringVar()
+        self.importancia = tk.StringVar()
 
         ttk.Label(self, text="Nombre:").grid(row=1, column=1)
-        ttk.Entry(self, textvariable=self.nombre_receta).grid(row=1, column=2)
-        ttk.Label(self, text="Tiempo preparación:").grid(row=2, column=1)
-        ttk.Entry(self, textvariable=self.tiempo_preparacion).grid(row=2, column=2)
-        ttk.Label(self, text="Tiempo cocción:").grid(row=3, column=1)
-        ttk.Entry(self, textvariable=self.tiempo_coccion).grid(row=3, column=2)
-        ttk.Label(self, text="Fecha creación:").grid(row=4, column=1)
-        ttk.Entry(self, textvariable=self.fecha_creacion).grid(row=4, column=2)
-        
-        ttk.Button(self, text="Guardar", command=self.guardar_receta).grid(row=5, column=1)
+        ttk.Entry(self, textvariable=self.nombre).grid(row=1, column=2)
+        ttk.Label(self, text="Fecha:").grid(row=2, column=1)
+        ttk.Entry(self, textvariable=self.fecha).grid(row=2, column=2)
+        ttk.Label(self, text="Hora:").grid(row=3, column=1)
+        ttk.Entry(self, textvariable=self.hora).grid(row=3, column=2)
+        ttk.Label(self, text="Descripcion:").grid(row=4, column=1)
+        ttk.Entry(self, textvariable=self.descripcion).grid(row=4, column=2)
+        ttk.Label(self, text="Importancia:").grid(row=5, column=1)
+        ttk.Entry(self, textvariable=self.importancia).grid(row=5, column=2)
+
+
+        ttk.Button(self, text="Guardar", command=self.guardar_evento).grid(row=5, column=1)
         ttk.Button(self, text="Cerrar", command=parent.destroy).grid(row=5, column=3)
 
-    def guardar_receta(self):
-        recetas = Evento()
-        recetas.set_nombre(self.nombre_receta.get())
-        recetas.set_tiempo_preparacion(self.tiempo_preparacion.get())
-        recetas.set_tiempo_coccion(self.tiempo_coccion.get())
-        recetas.set_fecha_creacion(self.fecha_creacion.get())
-        recetas.guardar()
+    def guardar_evento(self):
+        eventos = Evento()
+        eventos.set_nombre(self.evento.get())
+        eventos.set_fecha(self.fecha.get())
+        eventos.set_hora(self.hora.get())
+        eventos.set_descripcion(self.descripcion.get())
+        eventos.set_importancia(self.importancia.get())
+        eventos.guardar()
 
         with open("eventos.json", 'r') as archivo:
             try:
-                recetas = json.load(archivo)
+                eventos = json.load(archivo)
             except ValueError:
-                recetas = {"cantidad": 0, "recetas": []}         
+                eventos = {"cantidad": 0, "recetas": []}         
         
         receta = []
-        receta.append(recetas["cantidad"])
-        receta.append(self.nombre_receta.get())
-        receta.append(self.tiempo_preparacion.get())
-        receta.append(self.tiempo_coccion.get())
-        receta.append(self.fecha_creacion.get())
-        self.marco.actualizar_lista(receta)
+        receta.append(eventos["cantidad"])
+        receta.append(self.nombre.get())
+        receta.append(self.hora.get())
+        receta.append(self.fecha.get())
+        receta.append(self.descripcionn.get())
+        receta.append(self.importancia.get())
+        self.marco.actualizar_lista(eventos)
 
         self.parent.destroy()
 
 class Evento:
     def __init__(self):
         self.nombre = ""
-        self.tiempo_preparacion = ""
-        self.tiempo_coccion = ""
-        self.fecha_creacion = ""
+        self.fecha = ""
+        self.hora = ""
+        self.descripcion = ""
+        self.importancia = ""
     
     def set_nombre(self, nombre):
         self.nombre = nombre
     
-    def set_tiempo_preparacion(self, tiempo_preparacion):
-        self.tiempo_preparacion = tiempo_preparacion
+    def set_fecha(self, fecha):
+        self.fecha = fecha
 
-    def set_tiempo_coccion(self, tiempo_coccion):
-        self.tiempo_coccion = tiempo_coccion
+    def set_hora(self,hora):
+        self.hora = hora
 
-    def set_fecha_creacion(self, fecha_creacion):
-        self.fecha_creacion = fecha_creacion
+    def descripcion(self, descripcion):
+        self.descripcion = descripcion
+
+    def importancia(self, importancia):
+        self.importancia = importancia
+
 
     def get_elemento_tupla(self):
-        receta = ()
-        receta.append(self.nombre)
-        receta.append(self.tiempo_preparacion)
-        receta.append(self.tiempo_coccion)
-        receta.append(self.fecha_creacion)
-        return receta
+        evento = ()
+        evento.append(self.nombre)
+        evento.append(self.fecha)
+        evento.append(self.hora)
+        evento.append(self.descripcion)
+        evento.append(self.importancia)
+        return evento
     
     @staticmethod
-    def eliminar(id_receta):
+    def eliminar(id_evento):
         with open("eventos.json", 'r') as archivo:
             try:
-                recetas = json.load(archivo)
+                eventos = json.load(archivo)
             except ValueError:
                 pass
-        #print(recetas)
+        #print(eventos)
         aux = []
-        for elem in recetas["recetas"]:
-            if elem['id'] != id_receta:
+        for elem in eventos["eventos"]:
+            if elem['id'] != id_evento:
                 aux.append(elem)
 
-        recetas["recetas"] = aux
+        eventos["eventos"] = aux
 
         #recetas["cantidad"] = int(recetas["cantidad"])
 
         #print(recetas)
 
         with open("eventos.json", 'w') as archivo:
-            json.dump(recetas, archivo)
+            json.dump(eventos, archivo)
     
     def guardar(self):
         with open("eventos.json", 'r') as archivo:
             try:
-                recetas = json.load(archivo)
+                eventos = json.load(archivo)
             except ValueError:
-                recetas = {"cantidad": 0, "recetas": []}         
+                eventos = {"cantidad": 0, "recetas": []}         
         
-        receta = {}
-        receta["id"] = int(recetas["cantidad"])+1
-        receta["nombre"] = self.nombre
-        receta["tiempo_preparacion"] = self.tiempo_preparacion
-        receta["tiempo_coccion"] = self.tiempo_coccion
-        receta["fecha_creacion"] = self.fecha_creacion
-        recetas["recetas"].append(receta)
-        recetas["cantidad"] = int(recetas["cantidad"])+1
+        evento = {}
+        evento["id"] = int(eventos["cantidad"])+1
+        evento["nombre"] = self.nombre
+        evento["fecha"] = self.fecha
+        evento["hora"] = self.hora
+        evento["descripcion"] = self.descripcion
+        evento["importancia"] = self.importancia
+        evento["eventos"].append(evento)
+        evento["cantidad"] = int(eventos["cantidad"])+1
         
         with open("eventos.json", 'w') as archivo:
-            json.dump(recetas, archivo)
+            json.dump(eventos, archivo)
 
     def guardarV1(self):
         with open("eventos.json", 'r') as archivo:
             try:
-                recetas = json.load(archivo)
+                eventos = json.load(archivo)
             except ValueError:
-                recetas = []          
-        receta = {}
-        receta["nombre"] = self.nombre
-        receta["tiempo_preparacion"] = self.tiempo_preparacion
-        receta["tiempo_coccion"] = self.tiempo_coccion
-        receta["fecha_creacion"] = self.fecha_creacion
-        recetas.append(receta)
+                eventos = []          
+        evento = {}
+        evento["nombre"] = self.nombre
+        evento["fecha"] = self.fecha
+        evento["hora"] = self.hora
+        evento["descripcion"] = self.descripcion
+        evento["importancia"] = self.importancia
+        eventos.append(evento)
         
         with open("eventos.json", 'w') as archivo:
-            json.dump(recetas, archivo)
+            json.dump(eventos, archivo)
 
+root = tk.Tk()
+Calendario(root).grid()
+root.mainloop()

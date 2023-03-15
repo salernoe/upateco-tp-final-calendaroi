@@ -49,8 +49,6 @@ class Calendario(ttk.Frame):
         Alta(toplevel, self).grid()
 
     def get_elemento_lista(self):
-        # add data to the treeview
-        # leemos los datos
         with open("eventos.json", 'r') as archivo:
             try:
                 eventos = json.load(archivo)
@@ -59,9 +57,9 @@ class Calendario(ttk.Frame):
         lista_eventos = []
 
         #generamos los datos
-        for evento in eventos[" eventos"]:
+        for evento in eventos["eventos"]:
             lista_eventos.append(( evento["id"], evento["nombre"],  evento["fecha"],  evento["hora"], evento["descripcion"], evento["importacia"]))
-        # add data to the treeview
+        
         for evento in lista_eventos:
             self.tree.insert('', tk.END, values=evento)
 

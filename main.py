@@ -6,7 +6,7 @@ from eventos1 import Calendario
 class Bienvenida:
     def __init__(self, root):
         #setting title
-        root.title("Calendario  de eventos ")
+        root.title("Calendario de eventos tp final upteco")
         #setting window size
         width=352
         height=182

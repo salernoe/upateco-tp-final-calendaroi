@@ -8,35 +8,39 @@ import json
 
 class Evento:
     def __init__(self):
-        self.nombre = ""
-        self.fecha = ""
-        self.hora = ""
-        self.descripcion = ""
-        self.importancia = ""
+        self.id = ""
+        self.ingresar_nombre = ""
+        self.ingresar_fech = ""
+        self.ingresar_hora = ""
+        self.ingresar_descripcion = ""
+        self.ingresar_importancia= ""
+
+    def set_id(self, id):
+        self.id = id
     
-    def set_nombre(self, nombre):
-        self.nombre = nombre
+    def set_ingresar_nombre(self, ingresar_nombre):
+        self.ingresar_nombre = ingresar_nombre
     
-    def set_fecha(self, fecha):
-        self.fecha = fecha
+    def set_ingresar_fecha(self, ingresar_fecha):
+        self.ingresar_fecha = ingresar_fecha
 
-    def set_hora(self,hora):
-        self.hora = hora
+    def set_ingresar_hora(self,ingresar_hora):
+        self.ingresar_hora = ingresar_hora
 
-    def descripcion(self, descripcion):
-        self.descripcion = descripcion
+    def ingresar_descripcion(self, ingresar_descripcion):
+        self.ingresar_descripcion = ingresar_descripcion
 
-    def importancia(self, importancia):
-        self.importancia = importancia
+    def ingresar_importancia(self, ingresar_importancia):
+        self.ingresar_importancia = ingresar_importancia
 
 
     def get_elemento_tupla(self):
         evento = ()
-        evento.append(self.nombre)
-        evento.append(self.fecha)
-        evento.append(self.hora)
-        evento.append(self.descripcion)
-        evento.append(self.importancia)
+        evento.append(self.ingresar_nombre)
+        evento.append(self.ingresar_fecha)
+        evento.append(self.ingresar_hora)
+        evento.append(self.ingresar_descripcion)
+        evento.append(self.ingresar_importancia)
         return evento
     
     @staticmethod
@@ -54,10 +58,7 @@ class Evento:
 
         eventos["eventos"] = aux
 
-        #recetas["cantidad"] = int(recetas["cantidad"])
-
-        #print(recetas)
-
+       
         with open("eventos.json", 'w') as archivo:
             json.dump(eventos, archivo)
     
@@ -66,34 +67,45 @@ class Evento:
             try:
                 eventos = json.load(archivo)
             except ValueError:
-                eventos = {"cantidad": 0, "recetas": []}         
+                eventos = {"cantidad": 0, "eventos": []}         
         
         evento = {}
         evento["id"] = int(eventos["cantidad"])+1
-        evento["nombre"] = self.nombre
-        evento["fecha"] = self.fecha
-        evento["hora"] = self.hora
-        evento["descripcion"] = self.descripcion
-        evento["importancia"] = self.importancia
+        evento["ingresar_nombre"] = self.ingresar_nombre
+        evento["ingresar_fecha"] = self.ingresar_fecha
+        evento["ingresar_hora"] = self.ingresar_hora
+        evento["ingresar_descripcion"] = self.ingresar_descripcion
+        evento["ingresar_importancia"] = self.ingresar_importancia
         evento["eventos"].append(evento)
         evento["cantidad"] = int(eventos["cantidad"])+1
         
         with open("eventos.json", 'w') as archivo:
             json.dump(eventos, archivo)
-
-    def guardarV1(self):
+    
+    """def editar(self, id_evento):
+        print('editar')
         with open("eventos.json", 'r') as archivo:
             try:
                 eventos = json.load(archivo)
             except ValueError:
-                eventos = []          
-        evento = {}
-        evento["nombre"] = self.nombre
-        evento["fecha"] = self.fecha
-        evento["hora"] = self.hora
-        evento["descripcion"] = self.descripcion
-        evento["importancia"] = self.importancia
-        eventos.append(evento)
-        
+                pass
+        aux = []
+        for elem in eventos["eventos"]:
+            if elem['id'] != id_evento:
+                aux.append(elem)
+            else:
+                evento = {}
+                evento["id"] = id_evento
+                evento["ingresar_nombre"] = self.ingresar_nombre
+                evento["ingresar_fech"] = self.ingresar_fech
+                evento["ingresar_hora"] = self.ingresar_hora
+                evento["ingresar_descripcion"] = self.ingresar_descripcion
+                evento["ingresar_importancia"] = self.ingresar_importancia
+                aux.append(evento)
+                print(evento)
+        eventos["eventos"] = aux
+
         with open("eventos.json", 'w') as archivo:
-            json.dump(eventos, archivo)
+            json.dump(eventos, archivo)"""
+
+    

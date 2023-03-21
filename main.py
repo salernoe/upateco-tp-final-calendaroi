@@ -22,6 +22,7 @@ class Bienvenida:
         GLabel_764["fg"] = "#333333"
         GLabel_764["justify"] = "center"
         GLabel_764["text"] = "Bienvenidos al calendario de eventos"
+        
         GLabel_764.place(x=90,y=20,width=205,height=74)
 
         GButton_955=tk.Button(root)

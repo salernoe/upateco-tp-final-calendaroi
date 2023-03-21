@@ -92,6 +92,7 @@ class Calendario(Toplevel):
 
             
     def obtener_fila(self, event):
+        
         tkDescuentos = self.nametowidget("tkDescuentos")
         current_item = tkDescuentos.focus()
         seleccion = self.tk.selection()
@@ -103,14 +104,15 @@ class Calendario(Toplevel):
             self.select_id = -1
 
     def agregar(self):
-        NuevoEvento(self.master)
+       NuevoEvento(self.master)
+       
         
     def get_elemento_lista(self):
         with open("eventos.json", 'r') as archivo:
             try:
                 eventos = json.load(archivo)
             except ValueError:
-                eventos = []
+                eventos = {"cantidad": 1, "eventos":[]}
         lista_eventos = []
 
         #generamos los datos
@@ -123,6 +125,7 @@ class Calendario(Toplevel):
         #self.eliminar_receta()
     
     def editar(self): 
+       
         seleccion = self.tk.selection()
         # si selection() devuelve una tupla vacia, no hay seleccion
         if seleccion:
@@ -147,6 +150,7 @@ class Calendario(Toplevel):
                 self.agregar.set_ingresar_importancia(item['values'][5])
 
     def eliminar(self):
+       
         seleccion = self.tree.selection()
         # si selection() devuelve una tupla vacia, no hay seleccion
         if seleccion:
@@ -160,10 +164,12 @@ class Calendario(Toplevel):
     def actualizar_lista(self, evento):
         # add data to the treeview
         self.tree.insert('', tk.END, values=evento)
+       
         
     def clear_all(self):
         for item in self.tree.get_children():
             self.tree.delete(item)
+        
 
     def salir(self):
         self.destroy()

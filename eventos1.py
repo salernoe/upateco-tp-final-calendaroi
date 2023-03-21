@@ -51,6 +51,7 @@ class Calendario(Toplevel):
         
         self.get_elemento_lista()
         self.refrescar()
+        #self.tree.grid(row=0, column=0, padx = 5, pady = 5)
 
         ft = tkFont.Font(family='Times',size=10)
         btn_agregar = Button(self)
@@ -93,10 +94,10 @@ class Calendario(Toplevel):
     def obtener_fila(self, event):
         tkDescuentos = self.nametowidget("tkDescuentos")
         current_item = tkDescuentos.focus()
-        seleccion = self.tree.selection()
+        seleccion = self.tk.selection()
         if seleccion:
             for item_id in seleccion:
-                item = self.tree.item(item_id) # obtenemos el item y sus datos
+                item = self.tk.item(item_id) # obtenemos el item y sus datos
                 fila = item['values'][0]
         else:
             self.select_id = -1
@@ -117,16 +118,16 @@ class Calendario(Toplevel):
            lista_eventos.append ((evento["id"],evento["ingresar_nombre"], evento["ingresar_fecha"], evento["ingresar_hora"], evento["ingresar_descripcion"],evento["ingresar_importancia"]))
         # add data to the treeview
         for evento in lista_eventos:
-            self.tree.insert('', tk.END, values=evento)
+            self.tk.insert('', tk.END, values=evento)
 
         #self.eliminar_receta()
     
     def editar(self): 
-        seleccion = self.tree.selection()
+        seleccion = self.tk.selection()
         # si selection() devuelve una tupla vacia, no hay seleccion
         if seleccion:
             for item_id in seleccion:
-                item = self.tree.item(item_id) # obtenemos el item y sus datos
+                item = self.tk.item(item_id) # obtenemos el item y sus datos
                 id_evento = item['values'][0] # capturo el id de mi registro
                 #Receta.eliminar(id_receta) # actualizo mi .json
                 #self.tree.delete(item_id) # actualizo treeview

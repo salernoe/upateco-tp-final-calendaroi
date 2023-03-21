@@ -23,7 +23,7 @@ class NuevoEvento(Toplevel):
         self.geometry(alignstr)
         self.resizable(width=False, height=False)
        
-        self._ingresar_nombre = tk.StringVar()
+        self.ingresar_nombre = tk.StringVar()
         self.ingresar_fecha = tk.StringVar()
         self.ingresar_hora = tk.StringVar()
         self.ingresar_descripcion = tk.StringVar()
@@ -176,4 +176,4 @@ class NuevoEvento(Toplevel):
         evento.append(self.ingresar_importancia.get())
         self.marco.actualizar_lista(eventos)
 
-        self.parent.destroy()
+        #self.parent.destroy()

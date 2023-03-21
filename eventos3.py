@@ -82,7 +82,7 @@ class Evento:
         with open("eventos.json", 'w') as archivo:
             json.dump(eventos, archivo)
     
-    """def editar(self, id_evento):
+    def editar(self, id_evento):
         print('editar')
         with open("eventos.json", 'r') as archivo:
             try:
@@ -106,6 +106,6 @@ class Evento:
         eventos["eventos"] = aux
 
         with open("eventos.json", 'w') as archivo:
-            json.dump(eventos, archivo)"""
+            json.dump(eventos, archivo)
 
     

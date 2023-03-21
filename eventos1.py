@@ -114,7 +114,7 @@ class Calendario(Toplevel):
 
         #generamos los datos
         for evento in eventos["eventos"]:
-           lista_eventos.append ((evento["id"],evento["nombre"], evento["fecha"], evento["hora"], evento["descripcion"],evento["importancia"]))
+           lista_eventos.append ((evento["id"],evento["ingresar_nombre"], evento["ingresar_fecha"], evento["ingresar_hora"], evento["ingresar_descripcion"],evento["ingresar_importancia"]))
         # add data to the treeview
         for evento in lista_eventos:
             self.tree.insert('', tk.END, values=evento)

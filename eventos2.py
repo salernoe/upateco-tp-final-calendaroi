@@ -7,7 +7,7 @@ from tkinter import ttk
 import json
 import tkinter.font as tkFont
 from eventos3 import Evento
-#from eventos1 import Calendario
+
 
 class NuevoEvento(Toplevel):
     def __init__(self, master=None):
@@ -144,7 +144,7 @@ class NuevoEvento(Toplevel):
 
     def actualizar_lista(self, evento):
         # add data to the treeview
-        self.tree.insert('', tk.END, values=evento)
+        tk.insert('', tk.END, values=evento)
 
 
     def cancelar_evento(self):

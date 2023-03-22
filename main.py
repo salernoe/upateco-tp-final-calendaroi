@@ -15,14 +15,17 @@ class Bienvenida:
         alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
         root.geometry(alignstr)
         root.resizable(width=False, height=False)
+        root.configure(bg='orange')
+        
 
         GLabel_764=tk.Label(root)
         ft = tkFont.Font(family='Times',size=10)
         GLabel_764["font"] = ft
         GLabel_764["fg"] = "#333333"
         GLabel_764["justify"] = "center"
-        GLabel_764["text"] = "Bienvenidos al calendario de eventos"
-        
+        GLabel_764["text"] = "BIENVENIDOS AL CALENDARIO DE EVENTOS"
+        GLabel_764.configure(bg='white')
+
         GLabel_764.place(x=90,y=20,width=205,height=74)
 
         GButton_955=tk.Button(root)
@@ -57,5 +60,3 @@ if __name__ == "__main__":
     app = Bienvenida(root)
     root.mainloop()
     root.iconbitmap(default="calendario.ico")
-
-

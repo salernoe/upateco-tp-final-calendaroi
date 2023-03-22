@@ -21,6 +21,7 @@ class Calendario(Toplevel):
         screenheight = self.winfo_screenheight()
         alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
         self.geometry(alignstr)
+        self.configure(bg='orange')
         self.resizable(width=False, height=False)
 
         GLabel_464=Label(self)
@@ -30,8 +31,9 @@ class Calendario(Toplevel):
         GLabel_464["justify"] = "center"
         GLabel_464["text"] = " Calendario de Eventos"
         GLabel_464.place(x= 300,y=10,width=200,height=40)
+        GLabel_464.configure(bg='orange')
 
-        tk = ttk.Treeview(self, columns=("ingresar_nombre", "ingresar_fecha", "ingresar_hora","ingresar_descripcion","ingresar_importacia"), name="tkDescuentos")
+        tk = ttk.Treeview(self, columns=("ingresar_nombre", "ingresar_fecha", "ingresar_hora","ingresar_descripcion","ingresar_importacia"))
         tk.column("#0", width=78)
         tk.column("ingresar_nombre", width=150, anchor=CENTER)
         tk.column("ingresar_fecha", width=150, anchor=CENTER)
@@ -89,12 +91,18 @@ class Calendario(Toplevel):
         btn_salir["text"] = "SALIR"
         btn_salir.place(x=690,y=360,width=100,height=30)
         btn_salir["command"] = self.salir
-
+        self.tk.bind('<<TreeviewSelect>>', self.item_seleccionado)
             
-    def obtener_fila(self, event):
+    def item_seleccionado(self, event):
+        seleccion = tk.selection()
+        # si selection() devuelve una tupla vacia, no hay seleccion
+        if seleccion:
+            for item_id in seleccion:
+                item = tk.item(item_id) # obtenemos el item y sus datos
+                fila = item['values'][0]
+       
         
-        tkDescuentos = self.nametowidget("tkDescuentos")
-        current_item = tkDescuentos.focus()
+    def obtener_fila(self, event):
         seleccion = self.tk.selection()
         if seleccion:
             for item_id in seleccion:
@@ -120,58 +128,58 @@ class Calendario(Toplevel):
            lista_eventos.append ((evento["id"],evento["ingresar_nombre"], evento["ingresar_fecha"], evento["ingresar_hora"], evento["ingresar_descripcion"],evento["ingresar_importancia"]))
         # add data to the treeview
         for evento in lista_eventos:
-            self.tk.insert('', tk.END, values=evento)
+            tk.insert('', 'end', text=evento[0], values=evento)
 
         #self.eliminar_receta()
     
-    def editar(self): 
+    def eliminar(self):
        
-        seleccion = self.tk.selection()
+        seleccion = tk.selection()
         # si selection() devuelve una tupla vacia, no hay seleccion
         if seleccion:
             for item_id in seleccion:
-                item = self.tk.item(item_id) # obtenemos el item y sus datos
+                item = tk(item_id) # obtenemos el item y sus datos
+                id_evento = item['values'][0] # capturo el id de mi registro
+                Evento.eliminar(id_evento) # actualizo mi .json
+                tk.delete(item_id) # actualizo treeview
+
+    def editar(self): 
+       
+        seleccion = tk.selection()
+        # si selection() devuelve una tupla vacia, no hay seleccion
+        if seleccion:
+            for item_id in seleccion:
+                item = tk.item(item_id) # obtenemos el item y sus datos
                 id_evento = item['values'][0] # capturo el id de mi registro
                 #Receta.eliminar(id_receta) # actualizo mi .json
                 #self.tree.delete(item_id) # actualizo treeview
 
                 # creamos la ventana Alta
                 # como padre indicamos la ventana principal
-                toplevel = tk.Toplevel(self.parent)
+                toplevel = tk.Toplevel(self)
                 # agregamos el frame (Alta) a la ventana (toplevel)
                 self.agregar = Editar(toplevel, self)
                 self.agregar.grid() 
                 
                 self.agregar.set_id(item['values'][0])
-                self.agregar .set_ingresar_nombre(item['values'][1])
+                self.agregar.set_ingresar_nombre(item['values'][1])
                 self.agregar.set_ingresar_fecha(item['values'][2])
                 self.agregar.set_ingresar_hora(item['values'][3])
                 self.agregar.set_ingresar_descripcion(item['values'][4])
                 self.agregar.set_ingresar_importancia(item['values'][5])
 
-    def eliminar(self):
-       
-        seleccion = self.tree.selection()
-        # si selection() devuelve una tupla vacia, no hay seleccion
-        if seleccion:
-            for item_id in seleccion:
-                item = self.tree.item(item_id) # obtenemos el item y sus datos
-                id_evento = item['values'][0] # capturo el id de mi registro
-                Evento.eliminar(id_evento) # actualizo mi .json
-                self.tree.delete(item_id) # actualizo treeview
-
+    
 
     def actualizar_lista(self, evento):
         # add data to the treeview
-        self.tree.insert('', tk.END, values=evento)
+        tk.insert('', tk.END, values=evento)
        
         
     def clear_all(self):
-        for item in self.tree.get_children():
-            self.tree.delete(item)
+        for item in tk.get_children():
+            tk.delete(item)
         
 
     def salir(self):
         self.destroy()
-    
    

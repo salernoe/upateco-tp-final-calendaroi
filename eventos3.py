@@ -50,7 +50,7 @@ class Evento:
                 eventos = json.load(archivo)
             except ValueError:
                 pass
-        #print(eventos)
+      
         aux = []
         for elem in eventos["eventos"]:
             if elem['id'] != id_evento:
@@ -83,7 +83,55 @@ class Evento:
             json.dump(eventos, archivo)
     
     def editar(self, id_evento):
-        print('editar')
+        
+        with open("eventos.json", 'r') as archivo:
+            try:
+                eventos = json.load(archivo)
+            except ValueError:
+                pass
+        aux = []
+        for elem in eventos["eventos"]:
+            if elem['id'] != id_evento:
+                aux.append(elem)
+            else:
+                evento = {}
+                evento["id"] = id_evento
+                evento["ingresar_nombre"] = self.ingresar_nombre
+                evento["ingresar_fech"] = self.ingresar_fech
+                evento["ingresar_hora"] = self.ingresar_hora
+                evento["ingresar_descripcion"] = self.ingresar_descripcion
+                evento["ingresar_importancia"] = self.ingresar_importancia
+                aux.append(evento)
+                print(evento)
+        eventos["eventos"] = aux
+
+        with open("eventos.json", 'w') as archivo:
+            json.dump(eventos, archivo)
+
+    
+    
+    def guardar(self):
+        with open("eventos.json", 'r') as archivo:
+            try:
+                eventos = json.load(archivo)
+            except ValueError:
+                eventos = {"cantidad": 0, "eventos": []}         
+        
+        evento = {}
+        evento["id"] = int(eventos["cantidad"])+1
+        evento["ingresar_nombre"] = self.ingresar_nombre
+        evento["ingresar_fecha"] = self.ingresar_fecha
+        evento["ingresar_hora"] = self.ingresar_hora
+        evento["ingresar_descripcion"] = self.ingresar_descripcion
+        evento["ingresar_importancia"] = self.ingresar_importancia
+        evento["eventos"].append(evento)
+        evento["cantidad"] = int(eventos["cantidad"])+1
+        
+        with open("eventos.json", 'w') as archivo:
+            json.dump(eventos, archivo)
+    
+    def editar(self, id_evento):
+        
         with open("eventos.json", 'r') as archivo:
             try:
                 eventos = json.load(archivo)

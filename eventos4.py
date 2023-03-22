@@ -64,7 +64,6 @@ class Editar(ttk.Frame):
         self.ingresar_importancia.set(ingresar_importancia)
 
     def editar_evento(self):
-        print('ventana editar evento')
         eventos = Evento()
         eventos.set_id(self.id)
         eventos.set_ingresar_nombre(self.ingresar_nombre.get())

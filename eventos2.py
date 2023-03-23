@@ -9,9 +9,12 @@ import tkinter.font as tkFont
 from eventos3 import Evento
 
 class NuevoEvento(tk.Toplevel):
-    def __init__(self, master=None):
+   
+   
+    def __init__(self,marco, master=None ):
         super().__init__(master)        
         self.master = master
+        self.marco = marco
         self.title("undefined")
         #setting window size
         width=436
@@ -21,6 +24,12 @@ class NuevoEvento(tk.Toplevel):
         alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
         self.geometry(alignstr)
         self.resizable(width=False, height=False)
+
+        self.ingresar_nombre = tk.StringVar()
+        self.ingresar_fecha = tk.StringVar()
+        self.ingresar_hora = tk.StringVar()
+        self.ingresar_descripcion = tk.StringVar()
+        self.ingresar_importancia = tk.StringVar()
 
         GMessage_488=tk.Message(self)
         ft = tkFont.Font(family='Times',size=10)
@@ -38,14 +47,14 @@ class NuevoEvento(tk.Toplevel):
         GLabel_710["text"] = "Nombre"
         GLabel_710.place(x=10,y=40,width=70,height=25)
 
-        GLineEdit_344=tk.Entry(self)
-        GLineEdit_344["borderwidth"] = "1px"
+        ingresar_nombre=tk.Entry(self)
+        ingresar_nombre["borderwidth"] = "1px"
         ft = tkFont.Font(family='Times',size=10)
-        GLineEdit_344["font"] = ft
-        GLineEdit_344["fg"] = "#333333"
-        GLineEdit_344["justify"] = "center"
-        GLineEdit_344["text"] = "Entry"
-        GLineEdit_344.place(x=80,y=40,width=259,height=30)
+        ingresar_nombre["font"] = ft
+        ingresar_nombre["fg"] = "#333333"
+        ingresar_nombre["justify"] = "center"
+        ingresar_nombre["text"] = "Entry"
+        ingresar_nombre.place(x=80,y=40,width=259,height=30)
 
         GLabel_783=tk.Label(self)
         ft = tkFont.Font(family='Times',size=10)
@@ -55,14 +64,14 @@ class NuevoEvento(tk.Toplevel):
         GLabel_783["text"] = "Fecha"
         GLabel_783.place(x=10,y=80,width=70,height=25)
 
-        GLineEdit_159=tk.Entry(self)
-        GLineEdit_159["borderwidth"] = "1px"
+        ingresar_fecha=tk.Entry(self)
+        ingresar_fecha["borderwidth"] = "1px"
         ft = tkFont.Font(family='Times',size=10)
-        GLineEdit_159["font"] = ft
-        GLineEdit_159["fg"] = "#333333"
-        GLineEdit_159["justify"] = "center"
-        GLineEdit_159["text"] = "Entry"
-        GLineEdit_159.place(x=80,y=80,width=259,height=30)
+        ingresar_fecha["font"] = ft
+        ingresar_fecha["fg"] = "#333333"
+        ingresar_fecha["justify"] = "center"
+        ingresar_fecha["text"] = "Entry"
+        ingresar_fecha.place(x=80,y=80,width=259,height=30)
 
         GLabel_520=tk.Label(self)
         ft = tkFont.Font(family='Times',size=10)
@@ -72,14 +81,14 @@ class NuevoEvento(tk.Toplevel):
         GLabel_520["text"] = "Hora"
         GLabel_520.place(x=10,y=120,width=70,height=25)
 
-        GLineEdit_86=tk.Entry(self)
-        GLineEdit_86["borderwidth"] = "1px"
+        ingresar_hora=tk.Entry(self)
+        ingresar_hora["borderwidth"] = "1px"
         ft = tkFont.Font(family='Times',size=10)
-        GLineEdit_86["font"] = ft
-        GLineEdit_86["fg"] = "#333333"
-        GLineEdit_86["justify"] = "center"
-        GLineEdit_86["text"] = "Entry"
-        GLineEdit_86.place(x=80,y=120,width=259,height=30)
+        ingresar_hora["font"] = ft
+        ingresar_hora["fg"] = "#333333"
+        ingresar_hora["justify"] = "center"
+        ingresar_hora["text"] = "Entry"
+        ingresar_hora.place(x=80,y=120,width=259,height=30)
 
         GLabel_45=tk.Label(self)
         ft = tkFont.Font(family='Times',size=10)
@@ -89,14 +98,14 @@ class NuevoEvento(tk.Toplevel):
         GLabel_45["text"] = "Descripcion"
         GLabel_45.place(x=0,y=160,width=70,height=25)
 
-        GLineEdit_0=tk.Entry(self)
-        GLineEdit_0["borderwidth"] = "1px"
+        ingresar_descripcion=tk.Entry(self)
+        ingresar_descripcion["borderwidth"] = "1px"
         ft = tkFont.Font(family='Times',size=10)
-        GLineEdit_0["font"] = ft
-        GLineEdit_0["fg"] = "#333333"
-        GLineEdit_0["justify"] = "center"
-        GLineEdit_0["text"] = "Entry"
-        GLineEdit_0.place(x=80,y=160,width=259,height=30)
+        ingresar_descripcion["font"] = ft
+        ingresar_descripcion["fg"] = "#333333"
+        ingresar_descripcion["justify"] = "center"
+        ingresar_descripcion["text"] = "Entry"
+        ingresar_descripcion.place(x=80,y=160,width=259,height=30)
 
         GLabel_545=tk.Label(self)
         ft = tkFont.Font(family='Times',size=10)
@@ -106,14 +115,14 @@ class NuevoEvento(tk.Toplevel):
         GLabel_545["text"] = "Importancia"
         GLabel_545.place(x=0,y=200,width=70,height=25)
 
-        GLineEdit_477=tk.Entry(self)
-        GLineEdit_477["borderwidth"] = "1px"
+        ingresar_importancia=tk.Entry(self)
+        ingresar_importancia["borderwidth"] = "1px"
         ft = tkFont.Font(family='Times',size=10)
-        GLineEdit_477["font"] = ft
-        GLineEdit_477["fg"] = "#333333"
-        GLineEdit_477["justify"] = "center"
-        GLineEdit_477["text"] = "Entry"
-        GLineEdit_477.place(x=80,y=200,width=259,height=30)
+        ingresar_importancia["font"] = ft
+        ingresar_importancia["fg"] = "#333333"
+        ingresar_importancia["justify"] = "center"
+        ingresar_importancia["text"] = "Entry"
+        ingresar_importancia.place(x=80,y=200,width=259,height=30)
 
         GButton_773=tk.Button(self)
         GButton_773["bg"] = "#f0f0f0"
@@ -135,41 +144,20 @@ class NuevoEvento(tk.Toplevel):
         GButton_191.place(x=320,y=260,width=80,height=30)
         GButton_191["command"] = self.cancelar_evento
 
-    #def guardar_evento(self):
-       # toplevel = tk.Toplevel(self.parent)
-       # Alta(toplevel, self).grid()
+    def actualizar_lista(self, evento):
+        # add data to the treeview
+        tk.insert('', tk.END, values=evento)
 
-    def cancelar_carga(self):
+    def cancelar_evento(self):
        self.destroy()
 
-class Alta(ttk.Frame):
-    def __init__(self, parent, marco):
-        super().__init__(parent, padding=(20))
-        self.parent = parent
-        self.marco = marco
-        parent.title("Nueva Evento")
-        parent.geometry("500x300+180+100")
-        self.grid(sticky=(tk.N, tk.S, tk.E, tk.W))
-        parent.columnconfigure(0, weight=1)
-        parent.rowconfigure(0, weight=1)
-        parent.resizable(False, False)
-
-        self.nombre = tk.StringVar()
-        self.fecha = tk.StringVar()
-        self.hora = tk.StringVar()
-        self.descripcion = tk.StringVar()
-        self.importancia = tk.StringVar() 
-    
-    def cancelar_carga(self):
-       self.destroy()
-
-    def guardar_evento(self):
+    def guardar_evento(self,marco):
         eventos = Evento()
-        eventos.set_nombre(self.evento.get())
-        eventos.set_fecha(self.fecha.get())
-        eventos.set_hora(self.hora.get())
-        eventos.set_descripcion(self.descripcion.get())
-        eventos.set_importancia(self.importancia.get())
+        eventos.set_ingresar_nombre(self.ingresar_nombre.get())
+        eventos.set_ingresar_fecha(self.ingresar_fecha.get())
+        eventos.set_ingresar_hora(self.ingresar_hora.get())
+        eventos.set_ingresar_descripcion(self.ingresar_descripcion.get())
+        eventos.set_ingresar_importancia(self.ingresar_importancia.get())
         eventos.guardar()
 
         with open("eventos.json", 'r') as archivo:
@@ -178,13 +166,15 @@ class Alta(ttk.Frame):
             except ValueError:
                 eventos = {"cantidad": 0, "evento": []}         
         
+
+        self.marco = marco
         evento = []
         evento.append(eventos["cantidad"])
-        evento.append(self.nombre.get())
-        evento.append(self.hora.get())
-        evento.append(self.fecha.get())
-        evento.append(self.descripcion.get())
-        evento.append(self.importancia.get())
+        evento.append(self.ingresar_nombre.get())
+        evento.append(self.ingresar_fecha.get())
+        evento.append(self.ingresar_hora.get())
+        evento.append(self.ingresar_descripcion.get())
+        evento.append(self.ingresar_importancia.get())
         self.marco.actualizar_lista(eventos)
 
         self.parent.destroy()

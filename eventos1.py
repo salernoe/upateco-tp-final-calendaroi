@@ -7,6 +7,7 @@ from tkinter import ttk
 import json
 from eventos2 import NuevoEvento
 from eventos3 import Evento
+from eventos4 import Editar
 
 class Calendario(Toplevel):
     def __init__(self, master=None):
@@ -87,7 +88,14 @@ class Calendario(Toplevel):
         btn_salir.place(x=690,y=360,width=100,height=30)
         btn_salir["command"] = self.salir
 
-            
+    def item_seleccionado(self, event):
+        seleccion = tk.selection()
+        # si selection() devuelve una tupla vacia, no hay seleccion
+        if seleccion:
+            for item_id in seleccion:
+                item = tk.item(item_id) # obtenemos el item y sus datos
+                fila = item['values'][0]
+
     def obtener_fila(self, event):
         tkDescuentos = self.nametowidget("tkDescuentos")
         current_item = tkDescuentos.focus()
@@ -99,12 +107,49 @@ class Calendario(Toplevel):
 
     def agregar(self):
         NuevoEvento(self.master)
+
+    def get_elemento_lista(self):
+        with open("eventos.json", 'r') as archivo:
+            try:
+                eventos = json.load(archivo)
+            except ValueError:
+                eventos = {"cantidad": 1, "eventos":[]}
+        lista_eventos = []
+
+        #generamos los datos
+        for evento in eventos["eventos"]:
+           lista_eventos.append ((evento["id"],evento["ingresar_nombre"], evento["ingresar_fecha"], evento["ingresar_hora"], evento["ingresar_descripcion"],evento["ingresar_importancia"]))
+        # add data to the treeview
+        for evento in lista_eventos:
+            tk.insert('', 'end', text=evento[0], values=evento)
+
         
     def editar(self): 
-        #Descuento(self, self.select_id)
-        pass
+        seleccion = tk.selection()
+        # si selection() devuelve una tupla vacia, no hay seleccion
+        if seleccion:
+            for item_id in seleccion:
+                item = tk.item(item_id) # obtenemos el item y sus datos
+                id_evento = item['values'][0] # capturo el id de mi registro
+                #Receta.eliminar(id_receta) # actualizo mi .json
+                #self.tree.delete(item_id) # actualizo treeview
 
-    def eliminar(self):
+                # creamos la ventana Alta
+                # como padre indicamos la ventana principal
+                toplevel = tk.Toplevel(self)
+                # agregamos el frame (Alta) a la ventana (toplevel)
+                self.agregar = Editar(toplevel, self)
+                self.agregar.grid() 
+                
+                self.agregar.set_id(item['values'][0])
+                self.agregar.set_ingresar_nombre(item['values'][1])
+                self.agregar.set_ingresar_fecha(item['values'][2])
+                self.agregar.set_ingresar_hora(item['values'][3])
+                self.agregar.set_ingresar_descripcion(item['values'][4])
+                self.agregar.set_ingresar_importancia(item['values'][5])
+
+
+    """def eliminar(self):
         answer =  tkMsgBox.askokcancel(self.master.master.title(), "¿Está seguro de eliminar este descuento?")   
         with open("eventos.json", 'r') as archivo:
             try:
@@ -118,23 +163,23 @@ class Calendario(Toplevel):
             lista_eventos.append(( evento["id"], evento["nombre"],  evento["fecha"],  evento["hora"], evento["descripcion"], evento["importacia"]))
         
         for evento in lista_eventos:
-            self.tree.insert('', tk.END, values=evento)
+            tk.insert('', tk.END, values=evento)"""
 
-        self.eliminar_evento()
+        
 
-    def eliminar_evento(self):
-        seleccion = self.tree.selection()
+    def eliminar(self):
+        seleccion = tk.selection()
         # si selection() devuelve una tupla vacia, no hay seleccion
         if seleccion:
             for item_id in seleccion:
-                item = self.tree.item(item_id) # obtenemos el item y sus datos
+                item = tk.item(item_id) # obtenemos el item y sus datos
                 id_evento = item['values'][0] # capturo el id de mi registro
                 Evento.eliminar(id_evento) # actualizo mi .json
-                self.tree.delete(item_id) # actualizo treeview
+                tk.delete(item_id) # actualizo treeview
 
     def actualizar_lista(self, evento):
         # add data to the treeview
-        self.tree.insert('', tk.END, values=evento)
+        tk.insert('', tk.END, values=evento)
         
             
     def salir(self):
